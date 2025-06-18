@@ -65,7 +65,7 @@ npm start       # or yarn start
     - Connects to: ws://localhost:8000/ws/voicechat
     - Requires microphone permission for live audio input
     - Streams user speech and bot replies in real-time
-    
+
 
 🧪 API Reference
 
@@ -76,21 +76,21 @@ npm start       # or yarn start
 | `/fertilizer`      | POST   | Get fertilizer suggestion           |
 | `/ws/voicechat`    | WS     | WebSocket endpoint for live chat    |
 
-📁 Project Structure
-
-├── app.py              # FastAPI backend
-├── models/             # Trained ML/DL models
-├── frontend/           # React frontend
-├── static/uploads/     # Uploaded images
-├── utils/              # Helper files (fertilizer, disease info)
-
 🤖 Models Used
+
+Voice Chat: Llama-2-7b integration with context-based response (LangChain)
 
 Disease Detection: ResNet9 trained on plant disease dataset
 
 Fertilizer Prediction: Scikit-learn classifier trained on crop-soil data
 
-Voice Chat: LLM integration with context-based response (LangChain)
+🔗 Connect With Us
+
+LinkedIn: 
+1. [Abhishek Jain](https://www.linkedin.com/in/abhishek-jain2000/)
+2. [Tochi Obuzor](https://www.linkedin.com/in/tochi-obuzor/)
+
+
 
 
 
