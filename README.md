@@ -31,8 +31,8 @@ An AI-powered web application to help farmers detect plant diseases, get persona
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/ai-farming-assistant.git
-cd ai-farming-assistant 
+git clone https://github.com/Abhishek-Jain-12072000/FarmQ.git
+cd FarmQ
 ```
 
 ### 2. Backend Setup (FastAPI)
