@@ -24,6 +24,8 @@ from langchain.agents import initialize_agent
 
 conversations = {}
 
+WEATHER_API = "YOUR_OPENWEATHER_MAP_API"
+
 # Load disease classification model
 disease_classes = [...]  # Omitted for brevity
 disease_model_path = 'models/plant_disease_model.pth'
@@ -41,7 +43,7 @@ except Exception:
     crop_recommendation_model.predict = lambda X: np.array(['rice'])
 
 def weather_fetch(city_name):
-    api_key = "f4dd17518510eb75383bacfd52f08b44"
+    api_key = WEATHER_API
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
     complete_url = base_url + "appid=" + api_key + "&q=" + city_name
     response = requests.get(complete_url).json()
