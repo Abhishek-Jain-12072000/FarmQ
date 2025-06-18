@@ -1,0 +1,1 @@
+import{ComponentPropsToStylePropsMap as s}from"../types/style.mjs";const t=t=>{const e={styleProps:{},rest:{}};return Object.keys(t).forEach((r=>{(t=>t in s)(r)?e.styleProps=Object.assign(Object.assign({},e.styleProps),{[r]:t[r]}):e.rest=Object.assign(Object.assign({},e.rest),{[r]:t[r]})})),e};export{t as splitPrimitiveProps};

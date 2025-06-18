@@ -1,0 +1,1 @@
+import*as e from"react";import{FormField as r}from"./FormField.mjs";import{useAuthenticator as t}from"@aws-amplify/ui-react-core";function m(){const{fields:m}=t((({route:e})=>[e])),o=e.useRef(m.map(((t,m)=>e.createElement(r,Object.assign({key:m},t))))).current;return e.createElement(e.Fragment,null,o)}export{m as FormFields};

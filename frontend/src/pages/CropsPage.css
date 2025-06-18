@@ -1,0 +1,387 @@
+.crops-page {
+  min-height: 100vh;
+  background: var(--light-gray);
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dark-green);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.page-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--primary-green);
+}
+
+.page-subtitle {
+  font-size: 1.2rem;
+  color: var(--gray);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Filters Section */
+.filters-section {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 300px;
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: var(--gray);
+}
+
+.search-input {
+  width: 100%;
+  padding: 16px 16px 16px 48px;
+  border: 2px solid var(--light-green);
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  background: var(--white);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.category-filter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 200px;
+}
+
+.filter-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--gray);
+}
+
+.category-select {
+  padding: 16px 20px;
+  border: 2px solid var(--light-green);
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  background: var(--white);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.category-select:focus {
+  outline: none;
+  border-color: var(--primary-green);
+}
+
+/* Crops Content */
+.crops-content {
+  display: grid;
+  gap: 40px;
+}
+
+/* Map Section */
+.map-section {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--light-green);
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--dark-green);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--primary-green);
+}
+
+.map-container {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 2px solid var(--light-green);
+}
+
+.map-popup {
+  text-align: center;
+}
+
+.map-popup h3 {
+  color: var(--dark-green);
+  margin-bottom: 8px;
+}
+
+.map-popup p {
+  margin: 4px 0;
+  color: var(--gray);
+}
+
+/* Crops List Section */
+.crops-list-section {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--light-green);
+}
+
+.crops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+.crop-card {
+  border: 2px solid var(--light-green);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: var(--white);
+}
+
+.crop-card:hover {
+  border-color: var(--primary-green);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.crop-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.crop-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.crop-card:hover .crop-image img {
+  transform: scale(1.05);
+}
+
+.crop-category {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--primary-green);
+  color: var(--white);
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.crop-content {
+  padding: 24px;
+}
+
+.crop-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--dark-green);
+  margin-bottom: 12px;
+}
+
+.crop-description {
+  color: var(--gray);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.crop-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: var(--light-gray);
+  border-radius: var(--radius-md);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  color: var(--gray);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.detail-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark-green);
+}
+
+.crop-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 12px 0;
+  border-top: 1px solid var(--light-green);
+  border-bottom: 1px solid var(--light-green);
+}
+
+.farmer-info,
+.harvest-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+.farmer-icon,
+.harvest-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--primary-green);
+}
+
+.contact-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* No Results */
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray);
+}
+
+.no-results-icon {
+  width: 80px;
+  height: 80px;
+  color: var(--light-green);
+  margin-bottom: 24px;
+}
+
+.no-results h3 {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  color: var(--dark-gray);
+}
+
+/* Loading */
+.loading-container {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.loading-container p {
+  margin-top: 20px;
+  color: var(--gray);
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .crops-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .filters-section {
+    flex-direction: column;
+  }
+
+  .search-box {
+    min-width: auto;
+  }
+
+  .category-filter {
+    min-width: auto;
+  }
+
+  .crops-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crop-details {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .crop-meta {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .map-section,
+  .crops-list-section {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.8rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .crop-content {
+    padding: 20px;
+  }
+
+  .map-section,
+  .crops-list-section {
+    padding: 20px;
+  }
+} 

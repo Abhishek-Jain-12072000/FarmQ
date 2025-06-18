@@ -1,0 +1,1 @@
+import*as t from"react";import{useLayoutEffect as o}from"./useLayoutEffect.mjs";const r="amplify-id",e=t["useId".toString()]||(()=>{});let n=0;const s=s=>{const[u,i]=t.useState(e());return o((()=>{s||i((t=>null!=t?t:String(n++)))}),[s]),null!=s?s:u?`${r}-${u}`:""};export{r as AUTO_GENERATED_ID_PREFIX,s as useStableId};

@@ -1,0 +1,17 @@
+import { AuthenticatorRoute } from '@aws-amplify/ui';
+import { Defaults } from '../types';
+import { UseAuthenticator, UseAuthenticatorSelector } from '../useAuthenticator';
+import { UseAuthenticatorRoute, UseAuthenticatorRouteDefault } from './types';
+export declare const routeSelector: UseAuthenticatorSelector;
+export declare const getRouteMachineSelector: (route: AuthenticatorRoute) => UseAuthenticatorSelector;
+export declare function resolveConfirmResetPasswordRoute<FieldType = {}>(Component: Defaults<FieldType>['ConfirmResetPassword'], props: UseAuthenticator): UseAuthenticatorRoute<'ConfirmResetPassword', FieldType>;
+export declare function resolveConfirmSignInRoute<FieldType = {}>(Component: Defaults<FieldType>['ConfirmSignIn'], props: UseAuthenticator): UseAuthenticatorRoute<'ConfirmSignIn', FieldType>;
+export declare function resolveConfirmSignUpRoute<FieldType = {}>(Component: Defaults<FieldType>['ConfirmSignUp'], props: UseAuthenticator): UseAuthenticatorRoute<'ConfirmSignUp', FieldType>;
+export declare function resolveConfirmVerifyUserRoute<FieldType = {}>(Component: Defaults<FieldType>['ConfirmVerifyUser'], props: UseAuthenticator): UseAuthenticatorRoute<'ConfirmVerifyUser', FieldType>;
+export declare function resolveForceNewPasswordRoute<FieldType = {}>(Component: Defaults<FieldType>['ForceNewPassword'], props: UseAuthenticator): UseAuthenticatorRoute<'ForceNewPassword', FieldType>;
+export declare function resolveResetPasswordRoute<FieldType = {}>(Component: Defaults<FieldType>['ResetPassword'], props: UseAuthenticator): UseAuthenticatorRoute<'ResetPassword', FieldType>;
+export declare function resolveSetupTOTPRoute<FieldType = {}>(Component: Defaults<FieldType>['SetupTOTP'], props: UseAuthenticator): UseAuthenticatorRoute<'SetupTOTP', FieldType>;
+export declare function resolveSignInRoute<FieldType = {}>(Component: Defaults<FieldType>['SignIn'], props: UseAuthenticator): UseAuthenticatorRoute<'SignIn', FieldType>;
+export declare function resolveSignUpRoute<FieldType = {}>(Component: Defaults<FieldType>['SignUp'], props: UseAuthenticator): UseAuthenticatorRoute<'SignUp', FieldType>;
+export declare function resolveVerifyUserRoute<FieldType = {}>(Component: Defaults<FieldType>['VerifyUser'], props: UseAuthenticator): UseAuthenticatorRoute<'VerifyUser', FieldType>;
+export declare function resolveDefault<FieldType = {}>(): UseAuthenticatorRouteDefault<FieldType>;

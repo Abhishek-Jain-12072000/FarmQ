@@ -1,0 +1,1 @@
+import{fileuploader as e}from"./fileUploader.mjs";const s=Object.assign(Object.assign({},e),{filelist:{flexDirection:{value:"column"},gap:{value:"{space.small}"}},previewer:Object.assign(Object.assign({},e.previewer),{footer:{justifyContent:{value:"flex-end"}}})});export{s as storagemanager};

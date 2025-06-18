@@ -1,0 +1,528 @@
+.disease-page {
+  min-height: 100vh;
+  background: var(--light-gray);
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dark-green);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.page-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--rustic-orange);
+}
+
+.page-subtitle {
+  font-size: 1.2rem;
+  color: var(--gray);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Disease Content */
+.disease-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Input Methods */
+.input-methods {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--light-green);
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.method-tabs {
+  display: flex;
+  background: var(--light-gray);
+  border-bottom: 2px solid var(--light-green);
+}
+
+.method-tab {
+  flex: 1;
+  padding: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark-gray);
+  transition: all 0.3s ease;
+  border-right: 1px solid var(--light-green);
+}
+
+.method-tab:last-child {
+  border-right: none;
+}
+
+.method-tab:hover {
+  background: var(--light-green);
+  color: var(--dark-green);
+}
+
+.method-tab.active {
+  background: var(--primary-green);
+  color: var(--white);
+}
+
+.tab-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.method-content {
+  padding: 40px;
+}
+
+/* Upload Area */
+.upload-area {
+  border: 3px dashed var(--light-green);
+  border-radius: var(--radius-xl);
+  padding: 60px 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: var(--light-gray);
+}
+
+.upload-area:hover,
+.upload-area.drag-active {
+  border-color: var(--primary-green);
+  background: var(--light-green);
+  transform: translateY(-4px);
+}
+
+.upload-icon {
+  width: 80px;
+  height: 80px;
+  color: var(--primary-green);
+  margin-bottom: 24px;
+}
+
+.upload-area h3 {
+  font-size: 1.5rem;
+  color: var(--dark-green);
+  margin-bottom: 12px;
+}
+
+.upload-area p {
+  color: var(--gray);
+  margin-bottom: 16px;
+}
+
+.upload-hint {
+  font-size: 0.9rem;
+  color: var(--gray);
+  font-style: italic;
+}
+
+/* Image Preview */
+.image-preview {
+  text-align: center;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--light-green);
+  margin-bottom: 24px;
+}
+
+.image-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* Camera Container */
+.camera-container {
+  text-align: center;
+}
+
+.webcam {
+  width: 100%;
+  max-width: 500px;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--light-green);
+  margin-bottom: 24px;
+}
+
+.camera-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* Recording Container */
+.recording-container {
+  text-align: center;
+}
+
+.recording-area {
+  border: 3px dashed var(--light-green);
+  border-radius: var(--radius-xl);
+  padding: 60px 40px;
+  background: var(--light-gray);
+  transition: all 0.3s ease;
+}
+
+.recording-area.recording {
+  border-color: var(--rustic-orange);
+  background: var(--light-green);
+  animation: pulse 2s infinite;
+}
+
+.recording-icon {
+  width: 80px;
+  height: 80px;
+  color: var(--primary-brown);
+  margin-bottom: 24px;
+}
+
+.recording-area h3 {
+  font-size: 1.5rem;
+  color: var(--dark-green);
+  margin-bottom: 12px;
+}
+
+.recording-area p {
+  color: var(--gray);
+  margin-bottom: 24px;
+}
+
+.record-btn {
+  padding: 16px 32px;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  background: var(--primary-brown);
+  color: var(--white);
+}
+
+.record-btn:hover {
+  background: var(--dark-brown);
+  transform: translateY(-2px);
+}
+
+.record-btn.recording {
+  background: var(--rustic-orange);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 152, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 152, 0, 0);
+  }
+}
+
+/* Analysis Loading */
+.analysis-loading {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--light-green);
+  margin-bottom: 40px;
+}
+
+.analysis-loading h3 {
+  font-size: 1.5rem;
+  color: var(--dark-green);
+  margin-bottom: 12px;
+}
+
+.analysis-loading p {
+  color: var(--gray);
+}
+
+/* Analysis Results */
+.analysis-results {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--light-green);
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.result-header {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+  color: var(--white);
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.confidence-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+}
+
+.confidence-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.result-content {
+  padding: 32px;
+}
+
+.disease-info {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--light-green);
+}
+
+.disease-info h3 {
+  font-size: 1.8rem;
+  color: var(--dark-green);
+  margin-bottom: 12px;
+}
+
+.disease-description {
+  color: var(--gray);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.result-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.result-section {
+  background: var(--light-gray);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--light-green);
+}
+
+.result-section h4 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.2rem;
+  color: var(--dark-green);
+  margin-bottom: 16px;
+}
+
+.section-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--primary-green);
+}
+
+.result-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.result-section li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--light-green);
+  color: var(--dark-gray);
+  line-height: 1.5;
+}
+
+.result-section li:last-child {
+  border-bottom: none;
+}
+
+.result-section li::before {
+  content: '•';
+  color: var(--primary-green);
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.result-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* Tips Section */
+.tips-section {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tips-card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--light-green);
+}
+
+.tips-card h3 {
+  font-size: 1.5rem;
+  color: var(--dark-green);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.tips-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tips-card li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--light-green);
+  color: var(--dark-gray);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.tips-card li:last-child {
+  border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .method-tabs {
+    flex-direction: column;
+  }
+
+  .method-tab {
+    border-right: none;
+    border-bottom: 1px solid var(--light-green);
+  }
+
+  .method-tab:last-child {
+    border-bottom: none;
+  }
+
+  .method-content {
+    padding: 24px;
+  }
+
+  .upload-area {
+    padding: 40px 20px;
+  }
+
+  .upload-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .result-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .result-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .result-content {
+    padding: 24px;
+  }
+
+  .result-sections {
+    grid-template-columns: 1fr;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .tips-card {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.8rem;
+  }
+
+  .method-content {
+    padding: 20px;
+  }
+
+  .upload-area {
+    padding: 30px 16px;
+  }
+
+  .upload-area h3 {
+    font-size: 1.3rem;
+  }
+
+  .recording-area {
+    padding: 40px 20px;
+  }
+
+  .recording-area h3 {
+    font-size: 1.3rem;
+  }
+
+  .result-header {
+    padding: 24px;
+  }
+
+  .result-content {
+    padding: 20px;
+  }
+
+  .disease-info h3 {
+    font-size: 1.5rem;
+  }
+
+  .tips-card {
+    padding: 20px;
+  }
+} 

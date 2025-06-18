@@ -1,0 +1,1 @@
+const t=(t,e)=>{if(!t)return null;const r=Object.entries(t).filter((([t])=>t===e)).flatMap((([,t])=>Object.entries(t))).filter((t=>null==t?void 0:t[0]));return Object.fromEntries(r)};export{t as getOverrideProps};

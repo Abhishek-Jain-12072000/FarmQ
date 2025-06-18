@@ -1,0 +1,1 @@
+import*as e from"react";import{isFunction as s}from"@aws-amplify/ui";const a=({isPressed:a,defaultPressed:r,onClick:o,onChange:t,value:i})=>{const l=void 0!==a,[n,c]=e.useState(r);return{isPressed:a=l?a:n,handleClick:e.useCallback((e=>{s(o)&&o(e),l||c(!n),l&&s(t)&&t(i)}),[l,o,t,n,i])}};export{a as useToggleButton};

@@ -1,0 +1,1 @@
+import{isDesignToken as o,isString as t}from"@aws-amplify/ui";import{getCSSVariableIfValueIsThemeKey as r}from"./utils.mjs";const i=({value:i,propKey:m,tokens:p})=>o(i)?i.toString():t(i)?t(m)?r(m,i,p):i:null;export{i as getStyleValue};

@@ -1,56 +1,96 @@
-# FarmQ API
+# 🌾 AI Farming Assistant
 
-A FastAPI application for farm management and crop recommendations.
+An AI-powered web application to help farmers detect plant diseases, get personalized fertilizer suggestions, and receive live voice assistance for farming queries.
 
-## Features
+![demo-banner](docs/demo-preview.png)
 
-- Crop recommendation based on soil parameters and location
-- Fertilizer recommendation based on crop and soil parameters
-- Plant disease detection from images
+---
 
-## Deployment with Docker
+## 🚀 Features
 
-### Prerequisites
+- 📸 **Plant Disease Detection** – Upload or capture plant images to detect common diseases using deep learning.
+- 🌿 **Fertilizer Recommendation** – Suggests ideal fertilizer based on soil and crop details.
+- 🎤 **Live Voice Assistant** – Talk to an AI agent using voice (WebSocket-based real-time chat).
+- 📍 **Location-Based Tips** – Leverages your location for localized weather/crop suggestions.
 
-- Docker and Docker Compose installed on your system
+---
 
-### Steps to Deploy
+## 🧑‍💻 Tech Stack
 
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   cd FarmQ
-   ```
+| Layer       | Tech                         |
+|------------|------------------------------|
+| Frontend   | React.js, Lucide Icons       |
+| Backend    | FastAPI, WebSockets, Python  |
+| AI Models  | ResNet9 (PyTorch), ML Classifiers |
+| Extras     | React Webcam, Dropzone, TTS  |
 
-2. Build and start the Docker container:
-   ```
-   docker-compose up -d
-   ```
+---
 
-3. The API will be available at `http://localhost:8000`
+## 📦 Installation Guide
 
-### API Endpoints
+### 1. Clone the repository
 
-- `POST /upload-image`: Upload an image file
-- `POST /disease-predict`: Predict disease from an uploaded image
-- `POST /farm-assistant`: Get farming assistance based on your query
+```bash
+git clone https://github.com/your-username/ai-farming-assistant.git
+cd ai-farming-assistant 
+```
 
-## Development
+### 2. Backend Setup (FastAPI)
 
-### Running Locally
+```bash
+# Create a virtual environment
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
 
-1. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
+# Install dependencies
+pip install -r requirements.txt
 
-2. Run the application:
-   ```
-   uvicorn app:app --reload
-   ```
+# Run the server
+uvicorn app:app --reload
 
-### API Documentation
+```
 
-Once the application is running, you can access the API documentation at:
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
+🔗 API: http://localhost:8000
+
+### 3. Frontend Setup (React)
+
+```bash
+cd frontend
+npm install     # or yarn install
+npm start       # or yarn start
+
+```
+
+### 4. Voice Chat (WebSocket)
+    - Connects to: ws://localhost:8000/ws/voicechat
+    - Requires microphone permission for live audio input
+    - Streams user speech and bot replies in real-time
+    
+
+🧪 API Reference
+
+| Endpoint           | Method | Description                         |
+| ------------------ | ------ | ----------------------------------- |
+| `/upload-image`    | POST   | Upload plant image for prediction   |
+| `/disease-predict` | POST   | Predict disease from uploaded image |
+| `/fertilizer`      | POST   | Get fertilizer suggestion           |
+| `/ws/voicechat`    | WS     | WebSocket endpoint for live chat    |
+
+📁 Project Structure
+
+├── app.py              # FastAPI backend
+├── models/             # Trained ML/DL models
+├── frontend/           # React frontend
+├── static/uploads/     # Uploaded images
+├── utils/              # Helper files (fertilizer, disease info)
+
+🤖 Models Used
+
+Disease Detection: ResNet9 trained on plant disease dataset
+
+Fertilizer Prediction: Scikit-learn classifier trained on crop-soil data
+
+Voice Chat: LLM integration with context-based response (LangChain)
+
+
+

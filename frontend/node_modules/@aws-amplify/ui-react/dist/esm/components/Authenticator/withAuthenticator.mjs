@@ -1,0 +1,1 @@
+import t from"react";import{Authenticator as e}from"./Authenticator.mjs";function r(r,n={}){const{variation:o="modal"}=n;return function(a){return t.createElement(e,Object.assign({variation:o},n),(e=>t.createElement(r,Object.assign({},a,e))))}}export{r as withAuthenticator};

@@ -1,0 +1,1 @@
+import{useState as e,useCallback as t}from"react";import{isFunction as s}from"@aws-amplify/ui";const o=o=>{const{onChange:r,isChecked:a,defaultChecked:c,isDisabled:i}=o,d=void 0!==a,[n,u]=e(d?a:!!c),[f,h]=e(!1),l=t((e=>{i?e.preventDefault():(s(r)&&r(e),u(e.target.checked))}),[r,i]);return d&&n!==a&&u(a),{isOn:n,changeHandler:l,isFocused:f,setIsFocused:h}};export{o as useSwitch};

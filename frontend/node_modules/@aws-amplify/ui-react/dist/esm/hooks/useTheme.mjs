@@ -1,0 +1,1 @@
+import*as o from"react";import{createTheme as t}from"@aws-amplify/ui";import{AmplifyContext as e}from"../components/ThemeProvider/AmplifyContext.mjs";const m=o=>void 0===o||void 0===o.theme?t():o.theme,r=()=>{const t=o.useContext(e);return m(t)};export{m as getThemeFromContext,r as useTheme};
