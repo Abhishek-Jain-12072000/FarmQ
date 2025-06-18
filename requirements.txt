@@ -9,3 +9,4 @@ Pillow==10.0.1
 requests==2.31.0
 scikit-learn==1.5.2
 werkzeug==2.3.7
+gunicorn==21.2.0
