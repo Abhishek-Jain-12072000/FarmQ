@@ -1,94 +1,90 @@
-# 🌾 AI Farming Assistant
+# 🌾 FarmQ: AI-Powered Smart Farming Assistant
 
-An AI-powered web application to help farmers detect plant diseases, get personalized fertilizer suggestions, and receive live voice assistance for farming queries.
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
-![demo-banner](docs/demo-preview.png)
-
----
-
-## 🚀 Features
-
-- 📸 **Plant Disease Detection** – Upload or capture plant images to detect common diseases using deep learning.
-- 🌿 **Fertilizer Recommendation** – Suggests ideal fertilizer based on soil and crop details.
-- 🎤 **Live Voice Assistant** – Talk to an AI agent using voice (WebSocket-based real-time chat).
-- 📍 **Location-Based Tips** – Leverages your location for localized weather/crop suggestions.
+FarmQ is a comprehensive, AI-driven platform designed to empower farmers with real-time insights, disease detection, and personalized recommendations. By leveraging cutting-edge AI models from **Amazon Bedrock** and **computer vision**, FarmQ helps improve crop yields and promote sustainable farming practices.
 
 ---
 
-## 🧑‍💻 Tech Stack
+## 🚀 Key Features
 
-| Layer       | Tech                         |
-|------------|------------------------------|
-| Frontend   | React.js, Lucide Icons       |
-| Backend    | FastAPI, WebSockets, Python  |
-| AI Models  | ResNet9 (PyTorch), ML Classifiers |
-| Extras     | React Webcam, Dropzone, TTS  |
+- 📸 **Plant Disease Detection** – Instant diagnosis of plant diseases via image upload or live camera capture using a custom ResNet9 model.
+- 🌿 **Smart Fertilization** – Tailored fertilizer suggestions based on soil composition (N-P-K) and specific crop needs.
+- 🎤 **Voice-First Interaction** – A multilingual AI assistant powered by **Amazon Bedrock (Nova Lite)** and **Amazon Polly** for hands-free queries.
+- 🌾 **Crop Recommendation** – Intelligent analytics to suggest the most suitable crops for your soil and climate.
+- 💬 **Streaming AI Chat** – Real-time, low-latency conversational interface for general agricultural advice.
 
 ---
 
-## 📦 Installation Guide
+## � Tech Stack
 
-### 1. Clone the repository
+### Frontend & UI
+- **React.js** – Modern, responsive single-page application.
+- **Framer Motion** – Smooth animations and premium UX.
+- **Lucide React** – Clean, modern iconography.
 
+### Backend & AI
+- **FastAPI** – High-performance asynchronous Python backend.
+- **Amazon Bedrock** – Utilizing `amazon.nova-lite-v1:0` for intelligent reasoning.
+- **Amazon Polly** – Neural text-to-speech for vocal responses.
+- **PyTorch/ResNet9** – Deep learning for plant disease classification.
+- **Scikit-learn** – Machine learning for crop and fertilizer logic.
+
+### Infrastructure (AWS)
+- **Frontend Hosting**: Amazon S3 + CloudFront.
+- **Backend Deployment**: Dockerized FastAPI on Amazon EC2 + Application Load Balancer (ALB) + CloudFront.
+- **Registry**: Amazon Elastic Container Registry (ECR).
+
+---
+
+## 📦 Local Installation
+
+### 1. Clone & Navigate
 ```bash
 git clone https://github.com/Abhishek-Jain-12072000/FarmQ.git
 cd FarmQ
 ```
 
-### 2. Backend Setup (FastAPI)
-
+### 2. Backend Setup
 ```bash
-# Create a virtual environment
+cd backend
 python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
-
-# Install dependencies
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
-# Run the server
-uvicorn app:app --reload
+# Environment Variables (Create a .env file)
+export AWS_REGION=us-east-1
+export AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY
+export AWS_SECRET_ACCESS_KEY=YOUR_SECRET_KEY
+export BEDROCK_MODEL_ID=amazon.nova-lite-v1:0
 
+uvicorn app:app --reload --port 8000
 ```
 
-🔗 API: http://localhost:8000
-
-### 3. Frontend Setup (React)
-
+### 3. Frontend Setup
 ```bash
 cd frontend
-npm install     # or yarn install
-npm start       # or yarn start
-
+npm install
+npm start
 ```
 
-### 4. Voice Chat (WebSocket)
-    - Connects to: ws://localhost:8000/ws/voicechat
-    - Requires microphone permission for live audio input
-    - Streams user speech and bot replies in real-time
+---
 
+## ☁️ Deployment
 
-🧪 API Reference
+For detailed instructions on deploying FarmQ to AWS (EC2, S3, CloudFront, ALB), please refer to our **[AWS Deployment Guide](AWS_DEPLOY.md)**.
 
-| Endpoint           | Method | Description                         |
-| ------------------ | ------ | ----------------------------------- |
-| `/upload-image`    | POST   | Upload plant image for prediction   |
-| `/disease-predict` | POST   | Predict disease from uploaded image |
-| `/fertilizer`      | POST   | Get fertilizer suggestion           |
-| `/ws/voicechat`    | WS     | WebSocket endpoint for live chat    |
+---
 
-🤖 Models Used
+## 🛡 Security & Best Practices
+- **Secrets**: This project uses environment variables for AWS credentials. **Never** commit your `.env` file or hardcoded keys to GitHub.
+- **IAM**: Always use IAM Roles/Instance Profiles in production instead of root access keys.
 
-Voice Chat: Llama-2-7b integration with context-based response (LangChain)
+-
 
-Disease Detection: ResNet9 trained on plant disease dataset
-
-Fertilizer Prediction: Scikit-learn classifier trained on crop-soil data
-
-🔗 Connect With Us
-
-LinkedIn: 
-1. [Abhishek Jain](https://www.linkedin.com/in/abhishek-jain2000/)
-2. [Tochi Obuzor](https://www.linkedin.com/in/tochi-obuzor/)
 
 
 

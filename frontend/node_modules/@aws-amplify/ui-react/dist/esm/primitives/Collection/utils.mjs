@@ -1,1 +1,0 @@
-import{strHasLength as e}from"../shared/utils.mjs";const t=(e,t,o)=>{if(t<1||o<1)return[];const s=(t-1)*o;return e.slice(s,s+o)},o=(t,s)=>e(t)?t.toLowerCase().includes(s.toLowerCase()):"object"==typeof t&&null!==t&&Object.values(t).some((e=>o(e,s))),s=(e,t)=>Math.ceil(e/t);export{t as getItemsAtPage,s as getPageCount,o as itemHasText};

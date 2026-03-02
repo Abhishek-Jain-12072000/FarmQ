@@ -1,2 +1,0 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("react");exports.default=function(r,t){void 0===t&&(t={});var o=t.requireProvider,i=void 0===o||o,n=t.missingProviderMessage,u=void 0===n?"The hook for this context cannot be used outside of its Provider":n,d=e.createContext(t.defaultContext);return[function(t){var o=r(t);return e.createElement(d.Provider,{value:o},t.children)},function(){var r=e.useContext(d);if(i&&void 0===r)throw new Error(u);return r}]};
-//# sourceMappingURL=react-generate-context.cjs.production.min.js.map

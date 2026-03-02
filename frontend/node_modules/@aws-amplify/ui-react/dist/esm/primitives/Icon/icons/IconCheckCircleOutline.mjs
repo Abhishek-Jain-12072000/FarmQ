@@ -1,1 +1,0 @@
-import{__rest as s}from"tslib";import m from"classnames";import*as e from"react";import{ComponentClassNames as t}from"../../shared/constants.mjs";import{View as a}from"../../View/View.mjs";const r=r=>{const{className:o}=r,c=s(r,["className"]);return e.createElement(a,Object.assign({as:"span",width:"1em",height:"1em",className:m(t.Icon,o)},c))};export{r as IconCheckCircleOutline};

@@ -1,1 +1,0 @@
-import*as r from"react";import{isFunction as e}from"@aws-amplify/ui";function t({externalRef:t,internalRef:a}){return r.useCallback((r=>{e(t)?t(r):t&&(t.current=r),a.current=r}),[t,a])}export{t as useComposeRefsCallback};

@@ -1,1 +1,0 @@
-const r=r=>"object"==typeof r&&null!==r&&"message"in r&&"string"==typeof r.message,e=e=>{if(r(e))return e;try{return new Error(JSON.stringify(e))}catch(r){return new Error(String(e))}},t=r=>e(r).message,n=r=>{const e=new FormData(r.target);return Object.fromEntries(e)};export{t as getErrorMessage,n as getFormDataFromEvent,r as isErrorWithMessage,e as toErrorWithMessage};

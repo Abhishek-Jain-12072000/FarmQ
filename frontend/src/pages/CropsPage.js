@@ -67,7 +67,7 @@ const CropsPage = ({ userLocation }) => {
       location: { lat: 20.5937 + 0.02, lng: 78.9629 - 0.02 },
       farmer: 'Sita Devi',
       harvestDate: '2024-03-08',
-      image: 'https://images.unsplash.com/photo-1601593768797-9acb5d1a0c9a?w=400',
+      image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400',
       description: 'Fresh sweet corn, perfect for cooking'
     },
     {
@@ -113,7 +113,7 @@ const CropsPage = ({ userLocation }) => {
         // Fallback: Use browser geolocation or IP-based detection
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
-        
+
         if (data.country_code) {
           setCountryCode(data.country_code);
         }
@@ -130,10 +130,10 @@ const CropsPage = ({ userLocation }) => {
     // Convert prices based on location
     const locationBasedCrops = baseCrops.map(crop => ({
       ...crop,
-      price: Math.round(crop.price * (countryCode === 'IN' ? 1 : 
-                                    countryCode === 'NG' ? 8.33 :
-                                    countryCode === 'GH' ? 71.43 :
-                                    countryCode === 'SG' ? 62.5 : 1))
+      price: Math.round(crop.price * (countryCode === 'IN' ? 1 :
+        countryCode === 'NG' ? 8.33 :
+          countryCode === 'GH' ? 71.43 :
+            countryCode === 'SG' ? 62.5 : 1))
     }));
 
     // Simulate API call
@@ -265,7 +265,7 @@ const CropsPage = ({ userLocation }) => {
               <Package className="section-icon" />
               Available Crops ({filteredCrops.length})
             </h2>
-            
+
             <div className="crops-grid">
               {filteredCrops.map((crop) => (
                 <div key={crop.id} className="crop-card card">
@@ -273,11 +273,11 @@ const CropsPage = ({ userLocation }) => {
                     <img src={crop.image} alt={crop.name} />
                     <div className="crop-category">{crop.category}</div>
                   </div>
-                  
+
                   <div className="crop-details">
                     <h3 className="crop-name">{crop.name}</h3>
                     <p className="crop-description">{crop.description}</p>
-                    
+
                     <div className="crop-info">
                       <div className="info-item">
                         <Package className="info-icon" />
@@ -287,6 +287,8 @@ const CropsPage = ({ userLocation }) => {
                         <MapPin className="info-icon" />
                         <span>{crop.distance} km away</span>
                       </div>
+                    </div>
+                    {/* <div className="crop-info">
                       <div className="info-item">
                         <User className="info-icon" />
                         <span>{crop.farmer}</span>
@@ -295,8 +297,8 @@ const CropsPage = ({ userLocation }) => {
                         <Clock className="info-icon" />
                         <span>Harvested: {new Date(crop.harvestDate).toLocaleDateString()}</span>
                       </div>
-                    </div>
-                    
+                    </div> */}
+
                     <div className="crop-price">
                       <span className="price-amount">{formatPrice(crop.price, countryCode)}/{crop.unit}</span>
                       <button className="contact-btn">Contact Farmer</button>
@@ -305,7 +307,7 @@ const CropsPage = ({ userLocation }) => {
                 </div>
               ))}
             </div>
-            
+
             {filteredCrops.length === 0 && (
               <div className="no-results">
                 <Leaf className="no-results-icon" />

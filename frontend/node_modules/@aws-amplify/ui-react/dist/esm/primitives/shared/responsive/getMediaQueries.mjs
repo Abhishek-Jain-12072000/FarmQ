@@ -1,1 +1,0 @@
-import{objectKeys as t}from"../utils.mjs";const n=({breakpoints:n})=>{const r=t(n).sort(((t,r)=>n[r]-n[t]));return r.map(((t,i)=>{let o="";const m=n[t],e=r[i-1],p=e?n[e]-1:null;return m>=0&&(o=`(min-width: ${m}px)`),null!==p&&(o&&(o+=" and "),o+=`(max-width: ${p}px)`),{breakpoint:t,query:o,maxWidth:p,minWidth:m}}))};export{n as getMediaQueries};

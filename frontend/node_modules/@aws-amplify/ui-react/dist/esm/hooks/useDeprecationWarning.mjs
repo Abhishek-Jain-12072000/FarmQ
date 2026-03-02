@@ -1,1 +1,0 @@
-import{useDeprecationWarning as e}from"@aws-amplify/ui-react-core";const s=({message:s,shouldWarn:o})=>{const r=o&&("undefined"==typeof process||process&&"production"!==process.env.NODE_ENV);e({message:s,shouldWarn:r})};export{s as useDeprecationWarning};

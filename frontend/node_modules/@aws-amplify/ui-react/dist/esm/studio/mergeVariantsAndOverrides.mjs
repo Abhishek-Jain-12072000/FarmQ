@@ -1,1 +1,0 @@
-const e=(e,t)=>{if(!e&&!t)return null;if(!t)return e;if(!e)return t;const s=new Set(Object.keys(t)),n=Object.keys(e).filter((e=>s.has(e))),r=Object.fromEntries(n.map((s=>[s,Object.assign(Object.assign({},e[s]),t[s])])));return Object.assign(Object.assign(Object.assign({},e),t),r)};export{e as mergeVariantsAndOverrides};

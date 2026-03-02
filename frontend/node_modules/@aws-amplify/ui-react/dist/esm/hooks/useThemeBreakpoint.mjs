@@ -1,1 +1,0 @@
-import{useTheme as e}from"./useTheme.mjs";import{useBreakpoint as r}from"../primitives/shared/responsive/useBreakpoint.mjs";const t=()=>{const{breakpoints:{values:t,defaultBreakpoint:o}}=e();return r({breakpoints:t,defaultBreakpoint:o})};export{t as useThemeBreakpoint};
