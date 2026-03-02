@@ -83,8 +83,6 @@ For detailed instructions on deploying FarmQ to AWS (EC2, S3, CloudFront, ALB), 
 - **Secrets**: This project uses environment variables for AWS credentials. **Never** commit your `.env` file or hardcoded keys to GitHub.
 - **IAM**: Always use IAM Roles/Instance Profiles in production instead of root access keys.
 
--
-
 
 
 
