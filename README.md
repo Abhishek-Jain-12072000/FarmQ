@@ -60,6 +60,7 @@ export AWS_REGION=us-east-1
 export AWS_ACCESS_KEY_ID=YOUR_ACCESS_KEY
 export AWS_SECRET_ACCESS_KEY=YOUR_SECRET_KEY
 export BEDROCK_MODEL_ID=amazon.nova-lite-v1:0
+export OPENWEATHER_API_KEY=YOUR_OPENWEATHER_API_KEY
 
 uvicorn app:app --reload --port 8000
 ```
