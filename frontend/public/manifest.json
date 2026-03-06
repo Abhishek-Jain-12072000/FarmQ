@@ -1,6 +1,6 @@
 {
-  "short_name": "Farmq",
-  "name": "Farmq - Connecting farmers to buyers",
+  "short_name": "FarmQ",
+  "name": "FarmQ - Connecting farmers to buyers",
   "icons": [
     {
       "src": "favicon.ico",
@@ -12,4 +12,4 @@
   "display": "standalone",
   "theme_color": "#4CAF50",
   "background_color": "#ffffff"
-} 
+}

@@ -1,63 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --primary: #10b981;
+}
+
+body {
+  margin: 0;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-smoothing: grayscale;
+  background-color: #f8fafc;
+}
+
 .App {
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--light-green) 0%, var(--light-gray) 100%);
 }
 
-/* Smooth page transitions */
-.page-transition {
-  animation: fadeIn 0.5s ease-in-out;
-}
-
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Loading spinner */
-.loading-spinner {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid var(--light-green);
-  border-radius: 50%;
-  border-top-color: var(--primary-green);
-  animation: spin 1s ease-in-out infinite;
-}
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 
-@keyframes spin {
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .container {
-    padding: 0 16px;
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
   }
-  
-  .card {
-    padding: 16px;
-  }
-  
-  .btn {
-    padding: 10px 20px;
-    font-size: 14px;
+
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-@media (max-width: 480px) {
-  .container {
-    padding: 0 12px;
-  }
-  
-  .card {
-    padding: 12px;
-  }
-} 
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.4s ease-out forwards;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

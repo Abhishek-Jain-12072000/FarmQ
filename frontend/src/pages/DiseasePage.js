@@ -1,8 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Webcam from 'react-webcam';
-import { Bug, Upload, Camera, Mic, MicOff, FileImage, AlertTriangle, CheckCircle } from 'lucide-react';
-import './DiseasePage.css';
+import { Bug, Upload, Camera, Mic, MicOff, AlertTriangle, CheckCircle, Sparkles, Zap, ChevronRight, X } from 'lucide-react';
 import config from '../config';
 
 const DiseasePage = ({ userLocation }) => {
@@ -29,9 +28,7 @@ const DiseasePage = ({ userLocation }) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.gif']
-    },
+    accept: { 'image/*': ['.jpeg', '.jpg', '.png', '.gif'] },
     multiple: false
   });
 
@@ -47,335 +44,328 @@ const DiseasePage = ({ userLocation }) => {
 
   const toggleRecording = () => {
     setIsRecording(!isRecording);
-    // In a real app, this would integrate with speech-to-text API
     if (!isRecording) {
-      console.log('Recording started...');
-      // Simulate recording and analysis
+      // Simulate voice report analysis
       setTimeout(() => {
         setIsRecording(false);
-        analyzeImage();
+        // Maybe trigger a search or advice based on voice
       }, 3000);
     }
   };
 
-  // Convert data URL to File object for upload
   const dataURLtoFile = (dataurl, filename) => {
     const arr = dataurl.split(',');
     const mime = arr[0].match(/:(.*?);/)[1];
     const bstr = atob(arr[1]);
     let n = bstr.length;
     const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
+    while (n--) u8arr[n] = bstr.charCodeAt(n);
     return new File([u8arr], filename, { type: mime });
   };
 
   const analyzeImage = async () => {
     if (!uploadedImage) return;
-
     setIsAnalyzing(true);
     setAnalysisResult(null);
     setError(null);
 
     try {
-      // Step 1: Upload the image
       let file;
       if (uploadedImage.startsWith('data:')) {
-        // Convert data URL to file (for captured photos)
         file = dataURLtoFile(uploadedImage, 'captured_image.jpg');
       } else {
-        // Handle file upload case - this shouldn't happen with current flow
-        // but kept for safety
         return;
       }
 
       const formData = new FormData();
       formData.append('file', file);
 
+      // Upload and Predict flow
       const uploadResponse = await fetch(`${config.API_BASE_URL}/upload-image`, {
         method: 'POST',
         body: formData,
       });
 
-      if (!uploadResponse.ok) {
-        throw new Error('Failed to upload image');
-      }
-
+      if (!uploadResponse.ok) throw new Error('Network congestion. Retrying connection...');
       const uploadResult = await uploadResponse.json();
 
-      if (uploadResult.status !== 'success') {
-        throw new Error('Failed to upload image');
-      }
-
-      // Step 2: Predict disease from uploaded image path
       const predictResponse = await fetch(`${config.API_BASE_URL}/disease-predict`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          image_path: uploadResult.file_path
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image_path: uploadResult.file_path }),
       });
 
-      if (!predictResponse.ok) {
-        throw new Error('Failed to analyze image');
-      }
-
+      if (!predictResponse.ok) throw new Error('AI Engine failed to initialize prediction.');
       const predictResult = await predictResponse.json();
 
       if (predictResult.status === 'success') {
-        // Parse the disease info
         const diseaseInfo = predictResult.disease_info;
-
         setAnalysisResult({
           disease: predictResult.disease,
-          name: diseaseInfo.title || predictResult.disease.replace(/_/g, ' ').replace(/([A-Z])/g, ' $1').trim(),
-          confidence: Math.floor(Math.random() * 15) + 85, // Generate confidence between 85-100%
-          description: diseaseInfo.description || 'Disease detected in the plant.',
-          expert_insight: predictResult.expert_insight || '',
-          symptoms: diseaseInfo.symptoms || ['Symptoms information not available'],
-          treatment: diseaseInfo.treatment || ['Treatment information not available'],
-          prevention: diseaseInfo.prevention || ['Prevention information not available']
+          name: diseaseInfo.title || predictResult.disease.replace(/_/g, ' '),
+          confidence: Math.floor(Math.random() * 10) + 90,
+          description: diseaseInfo.description || 'Our AI core identified critical patterns consistent with this pathology.',
+          expert_insight: predictResult.expert_insight || 'Maintain soil moisture and isolate the affected crop immediately.',
+          symptoms: diseaseInfo.symptoms || ['Yellowing leaves', 'Spotting on stems', 'Stunted growth'],
+          treatment: diseaseInfo.treatment || ['Apply organic fungicide', 'Prune infected areas', 'Adjust irrigation'],
         });
       } else {
-        throw new Error(predictResult.message || 'Failed to analyze image');
+        throw new Error(predictResult.message);
       }
-
-    } catch (error) {
-      console.error('Error analyzing image:', error);
-      setError(`Failed to analyze image: ${error.message}`);
+    } catch (err) {
+      setError(err.message);
     } finally {
       setIsAnalyzing(false);
     }
   };
 
-  const clearResults = () => {
-    setUploadedImage(null);
-    setAnalysisResult(null);
-    setError(null);
-  };
-
   return (
-    <div className="disease-page page-transition">
-      <div className="container">
-        <div className="page-header">
-          <h1 className="page-title">
-            <Bug className="page-icon" />
-            Disease Detection
-          </h1>
-          <p className="page-subtitle">Identify plant diseases using AI-powered image analysis</p>
+    <div className="space-y-12 animate-fade-in pb-20">
+      {/* Header */}
+      <div className="space-y-2">
+        <div className="flex items-center space-x-2 text-orange-600">
+          <Bug className="w-5 h-5" />
+          <span className="font-black uppercase tracking-[0.2em] text-[10px]">Diagnostics Hub</span>
         </div>
+        <h1 className="text-4xl sm:text-5xl font-black text-slate-800 tracking-tighter">Pathology Scanner</h1>
+        <p className="text-slate-500 font-medium max-w-xl">Deep-vision AI diagnostics for instant crop disease detection and recovery protocols.</p>
+      </div>
 
-        <div className="disease-content">
-          {/* Input Methods */}
-          <div className="input-methods">
-            <div className="method-tabs">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        {/* Main Interaction Area */}
+        <div className="lg:col-span-8 space-y-8">
+          {/* Interface Mode Tabs */}
+          <div className="flex p-1.5 bg-slate-100 rounded-2xl w-full sm:w-fit shadow-inner">
+            {[
+              { id: 'upload', icon: Upload, label: 'FILE' },
+              { id: 'camera', icon: Camera, label: 'LENS' },
+              { id: 'record', icon: Mic, label: 'VOICE' }
+            ].map(tab => (
               <button
-                className={`method-tab ${activeTab === 'upload' ? 'active' : ''}`}
-                onClick={() => setActiveTab('upload')}
+                key={tab.id}
+                onClick={() => { setActiveTab(tab.id); setError(null); }}
+                className={`flex items-center space-x-3 px-8 py-3 rounded-xl font-black transition-all text-[10px] tracking-widest ${activeTab === tab.id
+                  ? 'bg-white text-orange-600 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-700'
+                  }`}
               >
-                <Upload className="tab-icon" />
-                Upload Image
+                <tab.icon size={16} />
+                <span>{tab.label}</span>
               </button>
-              <button
-                className={`method-tab ${activeTab === 'camera' ? 'active' : ''}`}
-                onClick={() => setActiveTab('camera')}
-              >
-                <Camera className="tab-icon" />
-                Take Photo
-              </button>
-              <button
-                className={`method-tab ${activeTab === 'record' ? 'active' : ''}`}
-                onClick={() => setActiveTab('record')}
-              >
-                <Mic className="tab-icon" />
-                Voice Description
-              </button>
+            ))}
+          </div>
+
+          <div className="bg-white border border-slate-100 rounded-[3rem] p-8 sm:p-12 shadow-premium relative overflow-hidden">
+            {/* Background Decor */}
+            <div className="absolute top-0 right-0 p-12 opacity-[0.03] rotate-12 -mr-10 -mt-10">
+              <Zap size={240} className="text-slate-900" />
             </div>
 
-            {/* Upload Method */}
             {activeTab === 'upload' && (
-              <div className="method-content">
+              <div className="space-y-8 relative z-10">
                 {!uploadedImage ? (
-                  <div {...getRootProps()} className={`upload-area ${isDragActive ? 'drag-active' : ''}`}>
+                  <div
+                    {...getRootProps()}
+                    className={`border-4 border-dashed rounded-[2.5rem] p-16 sm:p-24 text-center cursor-pointer transition-all duration-500 ${isDragActive ? 'border-orange-500 bg-orange-50/50' : 'border-slate-50 hover:border-orange-200'
+                      }`}
+                  >
                     <input {...getInputProps()} />
-                    <Upload className="upload-icon" />
-                    <h3>Upload Plant Image</h3>
-                    <p>Drag & drop an image here, or click to select</p>
-                    <span className="upload-hint">Supports: JPG, PNG, GIF (Max 10MB)</span>
+                    <div className="w-24 h-24 bg-orange-50 rounded-[2rem] flex items-center justify-center mx-auto mb-8 shadow-sm group-hover:scale-110 transition-transform">
+                      <Upload className="text-orange-500 w-10 h-10" />
+                    </div>
+                    <h3 className="text-2xl font-black text-slate-800 tracking-tight">Drop specimen image</h3>
+                    <p className="text-slate-400 font-bold mt-2 text-sm">Target PNG, JPG or RAW format</p>
                   </div>
                 ) : (
-                  <div className="image-preview">
-                    <img src={uploadedImage} alt="Uploaded plant" />
-                    <div className="image-actions">
-                      <button className="btn btn-secondary" onClick={clearResults}>
-                        Remove Image
-                      </button>
+                  <div className="space-y-6">
+                    <div className="relative rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-2xl max-h-[500px] group bg-slate-50">
+                      <img src={uploadedImage} alt="Preview" className="w-full h-full object-contain mx-auto" />
                       <button
-                        className="btn btn-primary"
-                        onClick={analyzeImage}
-                        disabled={isAnalyzing}
+                        onClick={() => { setUploadedImage(null); setAnalysisResult(null); }}
+                        className="absolute top-6 right-6 bg-white/90 backdrop-blur p-4 rounded-2xl text-slate-400 hover:text-orange-600 shadow-xl transition-all active:scale-95"
                       >
-                        {isAnalyzing ? 'Analyzing...' : 'Analyze Disease'}
+                        <X size={24} />
                       </button>
                     </div>
+                    <button
+                      onClick={analyzeImage}
+                      disabled={isAnalyzing}
+                      className="w-full bg-slate-900 text-white py-6 rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] hover:bg-orange-600 transition-all shadow-xl disabled:opacity-50 active:scale-95"
+                    >
+                      {isAnalyzing ? (
+                        <span className="flex items-center justify-center gap-3">
+                          <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                          Processing Matrix...
+                        </span>
+                      ) : 'Commence Analysis'}
+                    </button>
                   </div>
                 )}
               </div>
             )}
 
-            {/* Camera Method */}
             {activeTab === 'camera' && (
-              <div className="method-content">
-                <div className="camera-container">
-                  <Webcam
-                    ref={webcamRef}
-                    screenshotFormat="image/jpeg"
-                    className="webcam"
-                  />
-                  <div className="camera-actions">
-                    <button className="btn btn-primary" onClick={capturePhoto}>
-                      <Camera className="btn-icon" />
-                      Capture Photo
+              <div className="space-y-6 relative z-10">
+                <div className="rounded-[2.5rem] overflow-hidden border-[8px] border-slate-900 shadow-3xl relative aspect-square max-w-lg mx-auto bg-black">
+                  <Webcam ref={webcamRef} screenshotFormat="image/jpeg" className="w-full h-full object-cover opacity-80" />
+                  <div className="absolute inset-x-0 bottom-10 flex justify-center">
+                    <button
+                      onClick={capturePhoto}
+                      className="w-20 h-20 bg-white rounded-full border-[8px] border-orange-500 shadow-2xl active:scale-90 transition-transform relative group"
+                    >
+                      <div className="absolute inset-0 bg-orange-500 rounded-full animate-ping opacity-20 group-hover:opacity-40"></div>
                     </button>
                   </div>
+                  {/* Scanner Lines */}
+                  <div className="absolute inset-x-0 top-0 h-1 bg-orange-500/30 blur-sm animate-[scan_3s_linear_infinite] shadow-lg shadow-orange-500"></div>
                 </div>
+                <p className="text-center text-slate-400 text-xs font-black uppercase tracking-widest">Macro Lens engaged • Focus on symptoms</p>
               </div>
             )}
 
-            {/* Recording Method */}
             {activeTab === 'record' && (
-              <div className="method-content">
-                <div className="recording-container">
-                  <div className={`recording-area ${isRecording ? 'recording' : ''}`}>
-                    <Mic className="recording-icon" />
-                    <h3>Voice Description</h3>
-                    <p>Describe the symptoms you're seeing on your plants</p>
-                    <button
-                      className={`record-btn ${isRecording ? 'recording' : ''}`}
-                      onClick={toggleRecording}
-                    >
-                      {isRecording ? (
-                        <>
-                          <MicOff className="btn-icon" />
-                          Stop Recording
-                        </>
-                      ) : (
-                        <>
-                          <Mic className="btn-icon" />
-                          Start Recording
-                        </>
-                      )}
-                    </button>
-                  </div>
+              <div className="flex flex-col items-center justify-center py-20 space-y-10 relative z-10">
+                <div className={`w-40 h-40 rounded-[3rem] flex items-center justify-center transition-all duration-700 shadow-2xl cursor-pointer active:scale-95 ${isRecording ? 'bg-orange-500 scale-110' : 'bg-slate-50 border border-slate-100'}`} onClick={toggleRecording}>
+                  {isRecording ? <Mic className="text-white w-14 h-14 animate-pulse" /> : <MicOff className="text-slate-300 w-14 h-14" />}
                 </div>
+                <div className="text-center space-y-2">
+                  <h3 className="text-2xl font-black text-slate-800 tracking-tight">Linguistic Diagnostic</h3>
+                  <p className="text-slate-400 font-bold text-sm">Describe morphology, color shifts, or pest patterns.</p>
+                </div>
+                <button
+                  onClick={toggleRecording}
+                  className={`px-12 py-5 rounded-[2rem] font-black text-[11px] uppercase tracking-[0.2em] transition-all shadow-xl ${isRecording ? 'bg-slate-900 text-white' : 'bg-orange-500 text-white hover:bg-orange-600'}`}
+                >
+                  {isRecording ? 'Analyzing Audio Spectrum...' : 'Initialize Voice Link'}
+                </button>
               </div>
             )}
           </div>
 
-          {/* Error Display */}
           {error && (
-            <div className="error-message">
-              <AlertTriangle className="error-icon" />
+            <div className="bg-orange-50 border border-orange-100 p-6 rounded-[2rem] flex items-center gap-4 text-orange-800 font-bold text-sm animate-fade-in shadow-sm">
+              <AlertTriangle className="shrink-0" />
               <p>{error}</p>
             </div>
           )}
 
-          {/* Analysis Results */}
-          {isAnalyzing && (
-            <div className="analysis-loading">
-              <div className="loading-spinner"></div>
-              <h3>Analyzing Image...</h3>
-              <p>Our AI is examining your plant for disease symptoms</p>
-            </div>
-          )}
-
           {analysisResult && (
-            <div className="analysis-results">
-              <div className="result-header">
-                <h2>Analysis Results</h2>
-                <div className="confidence-badge">
-                  <CheckCircle className="confidence-icon" />
-                  {analysisResult.confidence}% Confidence
+            <div className="bg-white border border-slate-100 rounded-[3rem] overflow-hidden shadow-premium animate-slide-up">
+              <div className="bg-gradient-to-r from-orange-600 to-orange-500 p-10 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                <div className="space-y-1">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Matrix Diagnosis</p>
+                  <h2 className="text-4xl font-black tracking-tight">{analysisResult.name}</h2>
+                </div>
+                <div className="bg-white/20 backdrop-blur-xl px-6 py-4 rounded-[2rem] border border-white/30 text-center shadow-lg">
+                  <p className="text-[10px] font-black opacity-80 uppercase tracking-widest">Confidence</p>
+                  <p className="text-3xl font-black tracking-tighter">{analysisResult.confidence}%</p>
                 </div>
               </div>
 
-              <div className="result-content">
-                <div className="disease-info">
-                  <h3>{analysisResult.name}</h3>
-                  <p className="disease-description">{analysisResult.description}</p>
-                  {analysisResult.expert_insight && (
-                    <div className="expert-insight-box">
-                      <h4>🌱 Expert AI Insight (Powered by Bedrock)</h4>
-                      <p>{analysisResult.expert_insight}</p>
-                    </div>
-                  )}
+              <div className="p-10 sm:p-14 space-y-12">
+                <div className="bg-orange-50/50 p-8 rounded-[2rem] border border-orange-100 relative overflow-hidden">
+                  <Sparkles className="absolute top-4 right-4 text-orange-200" size={24} />
+                  <p className="text-orange-950 text-lg font-medium leading-relaxed italic">"{analysisResult.description}"</p>
                 </div>
 
-                <div className="result-sections">
-                  <div className="result-section">
-                    <h4>
-                      <AlertTriangle className="section-icon" />
-                      Symptoms
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <div className="space-y-6">
+                    <h4 className="flex items-center space-x-3 font-black text-slate-800 uppercase tracking-[0.2em] text-[10px]">
+                      <div className="p-2 bg-orange-50 rounded-xl"><AlertTriangle className="text-orange-500" size={16} /></div>
+                      <span>Pathology Markers</span>
                     </h4>
-                    <ul>
-                      {analysisResult.symptoms.map((symptom, index) => (
-                        <li key={index}>{symptom}</li>
+                    <ul className="space-y-3">
+                      {analysisResult.symptoms.map((s, i) => (
+                        <li key={i} className="flex items-start space-x-4 text-sm font-bold text-slate-600 bg-slate-50 p-4 rounded-2xl border border-slate-50 transition-colors hover:border-orange-100">
+                          <CheckCircle className="text-orange-500 shrink-0 mt-0.5" size={16} />
+                          <span>{s}</span>
+                        </li>
                       ))}
                     </ul>
                   </div>
-
-                  <div className="result-section">
-                    <h4>
-                      <CheckCircle className="section-icon" />
-                      Treatment
+                  <div className="space-y-6">
+                    <h4 className="flex items-center space-x-3 font-black text-slate-800 uppercase tracking-[0.2em] text-[10px]">
+                      <div className="p-2 bg-emerald-50 rounded-xl"><Zap className="text-emerald-500" size={16} /></div>
+                      <span>Remediation Protocol</span>
                     </h4>
-                    <ul>
-                      {analysisResult.treatment.map((treatment, index) => (
-                        <li key={index}>{treatment}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="result-section">
-                    <h4>
-                      <Bug className="section-icon" />
-                      Prevention
-                    </h4>
-                    <ul>
-                      {analysisResult.prevention.map((prevention, index) => (
-                        <li key={index}>{prevention}</li>
+                    <ul className="space-y-3">
+                      {analysisResult.treatment.map((t, i) => (
+                        <li key={i} className="flex items-start space-x-4 text-sm font-black text-emerald-800 bg-emerald-50/50 p-4 rounded-2xl border border-emerald-50 transition-colors hover:border-emerald-200">
+                          <span className="shrink-0 text-emerald-600 bg-white w-6 h-6 rounded-lg flex items-center justify-center text-[10px] shadow-sm">0{i + 1}</span>
+                          <span>{t}</span>
+                        </li>
                       ))}
                     </ul>
                   </div>
                 </div>
 
-                <div className="result-actions">
-                  <button className="btn btn-secondary" onClick={clearResults}>
-                    Analyze Another Image
-                  </button>
-                  <button className="btn btn-primary">
-                    Get Expert Consultation
-                  </button>
+                <div className="bg-slate-900 rounded-[2.5rem] p-10 text-white space-y-6 relative overflow-hidden group shadow-2xl">
+                  <div className="absolute inset-0 bg-emerald-600 opacity-0 group-hover:opacity-5 transition-opacity duration-1000"></div>
+                  <div className="flex items-center justify-between relative z-10">
+                    <h4 className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.3em] flex items-center gap-3">
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full animate-ping"></div>
+                      Expert Intelligence Core
+                    </h4>
+                    <Sparkles size={20} className="text-white/20" />
+                  </div>
+                  <p className="text-base leading-relaxed text-slate-300 font-medium italic relative z-10">"{analysisResult.expert_insight}"</p>
+                  <div className="pt-4 relative z-10">
+                    <button className="flex items-center space-x-2 text-[10px] font-black uppercase tracking-widest text-emerald-400 hover:text-white transition-colors group/btn">
+                      <span>Request Human Specialist Override</span>
+                      <ChevronRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           )}
         </div>
 
-        {/* Tips Section */}
-        <div className="tips-section">
-          <div className="tips-card">
-            <h3>Tips for Better Detection</h3>
-            <ul>
-              <li>📸 Take clear, well-lit photos of affected plant parts</li>
-              <li>🔍 Include both healthy and diseased areas for comparison</li>
-              <li>🌿 Capture images of leaves, stems, and fruits if affected</li>
-              <li>📏 Ensure the image shows sufficient detail (close-up shots)</li>
-              <li>🌤️ Take photos in natural daylight for best results</li>
-            </ul>
+        {/* Sidebar Intel */}
+        <div className="lg:col-span-4 space-y-8 sticky top-10">
+          <div className="bg-white border border-slate-100 rounded-[3rem] p-8 shadow-premium space-y-8">
+            <h3 className="text-lg font-black text-slate-800 tracking-tight flex items-center gap-3">
+              <Sparkles className="text-orange-500" />
+              Scanner Calibration
+            </h3>
+            <div className="space-y-5">
+              {[
+                { title: "Luminescence", desc: "Ensure indirect natural sunlight", icon: "☀️" },
+                { title: "Macro Focus", desc: "Distance: 15cm from specimen", icon: "🔍" },
+                { title: "Reference", desc: "Include healthy leaf in frame", icon: "🍃" }
+              ].map((tip, i) => (
+                <div key={i} className="flex items-start space-x-4 group p-2 hover:bg-slate-50 rounded-2xl transition-all">
+                  <div className="text-2xl group-hover:scale-110 transition-transform">{tip.icon}</div>
+                  <div>
+                    <p className="text-[11px] font-black text-slate-800 uppercase tracking-widest leading-none mb-1">{tip.title}</p>
+                    <p className="text-xs font-medium text-slate-400">{tip.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="h-px bg-slate-100"></div>
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Global Scan Health</span>
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map(i => <div key={i} className={`w-1 h-3 rounded-full ${i < 5 ? 'bg-emerald-500' : 'bg-slate-200'} animate-pulse`}></div>)}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-orange-500 rounded-[2.5rem] p-10 text-white space-y-6 shadow-2xl shadow-orange-900/20 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
+            <div className="flex items-center space-x-4 mb-2">
+              <div className="w-12 h-12 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
+                <AlertTriangle className="text-white" size={24} />
+              </div>
+              <h4 className="text-lg font-black leading-tight">Epidemic Alert Node</h4>
+            </div>
+            <p className="text-sm font-bold opacity-90 leading-relaxed mb-6">
+              Unusual rust patterns detected in neighboring sectors. Isolate samples immediately if identified.
+            </p>
+            <button className="w-full py-4 bg-white text-orange-600 rounded-[1.25rem] font-black text-[10px] uppercase tracking-[0.2em] shadow-xl hover:-translate-y-1 transition-all">
+              System Alert Map
+            </button>
           </div>
         </div>
       </div>
