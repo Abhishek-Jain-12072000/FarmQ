@@ -298,14 +298,18 @@
   border-radius: var(--radius-md);
 }
 
+
+
+.info-container {
+  display: flex;
+  flex-direction: column; /* stack items vertically */
+  gap: 4px; /* optional space between lines */
+}
+
 .info-item {
   display: flex;
-  align-items: center;
-  gap: 0.5rem; /* smaller gap between icon and text */
-  font-size: 0.875rem;
-  color: var(--dark-gray);
-  font-weight: 500;
-  white-space: nowrap;
+  align-items: center; /* vertically align icon and text */
+  gap: 6px; /* space between icon and text */
 }
 
 .info-item span {

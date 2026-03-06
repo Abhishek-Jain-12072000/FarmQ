@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Users, MapPin, Phone, Mail, Building, Search, Filter, Star } from 'lucide-react';
-import './BuyersPage.css';
+import { Users, MapPin, Phone, Star, Search, Sparkles, MessageSquare, ShieldCheck, ChevronRight } from 'lucide-react';
 
 const BuyersPage = ({ userLocation }) => {
   const [buyers, setBuyers] = useState([]);
@@ -10,7 +9,6 @@ const BuyersPage = ({ userLocation }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [loading, setLoading] = useState(true);
 
-  // Mock buyers data
   const mockBuyers = [
     {
       id: 1,
@@ -24,14 +22,14 @@ const BuyersPage = ({ userLocation }) => {
       email: 'contact@freshmarket.com',
       address: '123 Main Street, City Center',
       crops: ['wheat', 'rice', 'vegetables', 'fruits'],
-      description: 'Leading supermarket chain with 50+ stores across the region',
-      image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400'
+      description: 'Leading supermarket chain with 50+ stores across the region. High volume procurement.',
+      image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800'
     },
     {
       id: 2,
       name: 'Organic Foods Ltd.',
       category: 'organic',
-      type: 'Organic Food Company',
+      type: 'Organic Specialist',
       location: { lat: 20.5937 - 0.01, lng: 78.9629 - 0.01 },
       distance: 5.8,
       rating: 4.8,
@@ -39,14 +37,14 @@ const BuyersPage = ({ userLocation }) => {
       email: 'info@organicfoods.com',
       address: '456 Green Avenue, Eco District',
       crops: ['organic vegetables', 'fruits', 'grains'],
-      description: 'Specialized in organic and natural food products',
-      image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400'
+      description: 'Global exporter specialized in certified organic produce and fair trade.',
+      image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800'
     },
     {
       id: 3,
-      name: 'Grain Traders Association',
+      name: 'Grain Traders',
       category: 'wholesale',
-      type: 'Wholesale Market',
+      type: 'Bulk Distribution',
       location: { lat: 20.5937 + 0.02, lng: 78.9629 + 0.02 },
       distance: 7.1,
       rating: 4.2,
@@ -54,72 +52,21 @@ const BuyersPage = ({ userLocation }) => {
       email: 'sales@graintraders.com',
       address: '789 Trade Center, Market Area',
       crops: ['wheat', 'rice', 'corn', 'pulses'],
-      description: 'Large-scale grain trading and distribution',
-      image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400'
-    },
-    {
-      id: 4,
-      name: 'Local Restaurant Group',
-      category: 'restaurant',
-      type: 'Restaurant Chain',
-      location: { lat: 20.5937 - 0.02, lng: 78.9629 - 0.02 },
-      distance: 4.5,
-      rating: 4.6,
-      phone: '+91 98765 43213',
-      email: 'procurement@localrestaurant.com',
-      address: '321 Food Street, Downtown',
-      crops: ['vegetables', 'fruits', 'herbs', 'spices'],
-      description: 'Premium restaurant chain sourcing fresh local produce',
-      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400'
-    },
-    {
-      id: 5,
-      name: 'Export Quality Foods',
-      category: 'export',
-      type: 'Export Company',
-      location: { lat: 20.5937 + 0.03, lng: 78.9629 + 0.03 },
-      distance: 12.3,
-      rating: 4.7,
-      phone: '+91 98765 43214',
-      email: 'exports@qualityfoods.com',
-      address: '654 Export Zone, Industrial Area',
-      crops: ['basmati rice', 'spices', 'organic products'],
-      description: 'International food export company with global reach',
-      image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400'
-    },
-    {
-      id: 6,
-      name: 'Community Co-op',
-      category: 'cooperative',
-      type: 'Farmer Cooperative',
-      location: { lat: 20.5937 - 0.03, lng: 78.9629 - 0.03 },
-      distance: 2.1,
-      rating: 4.4,
-      phone: '+91 98765 43215',
-      email: 'coop@community.com',
-      address: '987 Village Road, Rural Area',
-      crops: ['all crops', 'dairy', 'poultry'],
-      description: 'Community-based cooperative supporting local farmers',
-      image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400'
+      description: 'Massive scale grain storage and distribution network across Asia.',
+      image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800'
     }
   ];
 
   useEffect(() => {
-    // Simulate API call
     setTimeout(() => {
       setBuyers(mockBuyers);
       setFilteredBuyers(mockBuyers);
       setLoading(false);
-    }, 1000);
+    }, 600);
   }, []);
 
   useEffect(() => {
-    filterBuyers();
-  }, [searchTerm, selectedCategory, buyers]);
-
-  const filterBuyers = () => {
     let filtered = buyers;
-
     if (searchTerm) {
       filtered = filtered.filter(buyer =>
         buyer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -127,199 +74,172 @@ const BuyersPage = ({ userLocation }) => {
         buyer.crops.some(crop => crop.toLowerCase().includes(searchTerm.toLowerCase()))
       );
     }
-
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(buyer => buyer.category === selectedCategory);
     }
-
     setFilteredBuyers(filtered);
-  };
+  }, [searchTerm, selectedCategory, buyers]);
 
   const categories = [
-    { value: 'all', label: 'All Categories' },
+    { value: 'all', label: 'All Partners' },
     { value: 'retail', label: 'Retail' },
     { value: 'wholesale', label: 'Wholesale' },
-    { value: 'restaurant', label: 'Restaurant' },
-    { value: 'organic', label: 'Organic' },
-    { value: 'export', label: 'Export' },
-    { value: 'cooperative', label: 'Cooperative' }
+    { value: 'restaurant', label: 'Hospitality' },
+    { value: 'organic', label: 'Organic' }
   ];
-
-  const renderStars = (rating) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<Star key={i} className="star filled" />);
-    }
-    if (hasHalfStar) {
-      stars.push(<Star key="half" className="star half" />);
-    }
-    const emptyStars = 5 - Math.ceil(rating);
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(<Star key={`empty-${i}`} className="star empty" />);
-    }
-
-    return stars;
-  };
 
   if (loading) {
     return (
-      <div className="buyers-page page-transition">
-        <div className="container">
-          <div className="loading-container">
-            <div className="loading-spinner"></div>
-            <p>Loading buyers in your area...</p>
-          </div>
-        </div>
+      <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
+        <div className="w-10 h-10 border-4 border-emerald-100 border-t-emerald-600 rounded-full animate-spin"></div>
+        <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">Scanning Procurement Nodes...</p>
       </div>
     );
   }
 
   return (
-    <div className="buyers-page page-transition">
-      <div className="container">
-        <div className="page-header">
-          <h1 className="page-title">
-            <Users className="page-icon" />
-            Buyers Directory
-          </h1>
-          <p className="page-subtitle">Connect with buyers and distributors in your area</p>
+    <div className="space-y-12 animate-fade-in pb-20">
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2 text-emerald-600">
+            <Users className="w-5 h-5" />
+            <span className="font-black uppercase tracking-[0.2em] text-[10px]">Verified Network</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-black text-slate-800 tracking-tighter">Trade Partnerships</h1>
+          <p className="text-slate-500 font-medium max-w-xl">Direct access to distributors, exporters, and retail giants seeking fresh produce and grain.</p>
         </div>
 
-        {/* Filters */}
-        <div className="filters-section">
-          <div className="search-box">
-            <Search className="search-icon" />
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="relative group">
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
             <input
               type="text"
-              placeholder="Search buyers, types, or crops..."
+              placeholder="Search by crop or company..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
+              className="pl-12 pr-6 py-4 bg-white border border-slate-100 rounded-[1.5rem] w-full sm:w-80 shadow-premium focus:outline-none focus:ring-4 ring-emerald-500/5 transition-all text-sm font-bold text-slate-700 placeholder:text-slate-300"
             />
           </div>
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="px-8 py-4 bg-slate-900 text-white rounded-[1.5rem] focus:outline-none transition-all font-black text-xs uppercase tracking-widest cursor-pointer shadow-xl appearance-none"
+          >
+            {categories.map(c => <option key={c.value} value={c.value} className="bg-white text-slate-800">{c.label}</option>)}
+          </select>
+        </div>
+      </div>
 
-          <div className="category-filter">
-            <Filter className="filter-icon" />
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="category-select"
-            >
-              {categories.map(category => (
-                <option key={category.value} value={category.value}>
-                  {category.label}
-                </option>
-              ))}
-            </select>
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        {/* Buyer Feed */}
+        <div className="lg:col-span-8 space-y-8">
+          {filteredBuyers.map((buyer) => (
+            <div key={buyer.id} className="bg-white rounded-[3rem] p-8 sm:p-10 border border-slate-100 flex flex-col md:flex-row gap-10 hover:shadow-premium transition-all duration-500 group relative">
+              {/* Image Section */}
+              <div className="w-full md:w-64 h-64 rounded-[2.5rem] overflow-hidden shrink-0 shadow-2xl shadow-slate-200">
+                <img src={buyer.image} alt={buyer.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+              </div>
+
+              {/* Info Section */}
+              <div className="flex-1 space-y-6">
+                <div className="flex items-start justify-between">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <span className="px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-xl text-[10px] font-black uppercase tracking-widest">{buyer.category}</span>
+                      <div className="flex items-center text-orange-500 bg-orange-50 px-3 py-1 rounded-xl">
+                        <Star size={12} className="fill-current" />
+                        <span className="ml-1.5 text-[10px] font-black">{buyer.rating}</span>
+                      </div>
+                    </div>
+                    <h3 className="text-3xl font-black text-slate-800 tracking-tight">{buyer.name}</h3>
+                    <div className="flex items-center text-slate-400 text-xs font-black uppercase tracking-widest">
+                      <ShieldCheck size={14} className="mr-2 text-emerald-500" />
+                      <span>{buyer.type}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-sm font-medium text-slate-500 leading-relaxed italic">"{buyer.description}"</p>
+
+                <div className="flex flex-wrap gap-2.5">
+                  {buyer.crops.map((crop, i) => (
+                    <span key={i} className="px-4 py-2 bg-slate-50 border border-slate-100 rounded-2xl text-[10px] font-black text-slate-600 uppercase tracking-tighter">
+                      {crop}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between pt-6 border-t border-slate-50 gap-6">
+                  <div className="flex items-center space-x-6">
+                    <div className="flex items-center space-x-2 text-slate-400">
+                      <MapPin size={16} className="text-orange-500" />
+                      <span className="text-xs font-black tracking-widest">{buyer.distance} KM</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-slate-400">
+                      <Phone size={16} className="text-emerald-500" />
+                      <span className="text-xs font-black tracking-widest">VERIFIED</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-3">
+                    <button className="p-4 bg-slate-50 text-slate-600 rounded-2xl hover:bg-emerald-600 hover:text-white transition-all shadow-sm active:scale-95">
+                      <MessageSquare size={20} />
+                    </button>
+                    <button className="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-600 shadow-xl transition-all flex items-center group active:scale-95">
+                      <span>Open Channel</span>
+                      <ChevronRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="buyers-content">
-          {/* Map Section */}
-          <div className="map-section">
-            <h2 className="section-title">
-              <MapPin className="section-icon" />
-              Buyer Locations
-            </h2>
-            <div className="map-container">
+        {/* Map Integration */}
+        <div className="lg:col-span-4 sticky top-10">
+          <div className="bg-white rounded-[3rem] p-8 border border-slate-100 shadow-premium space-y-8">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-black text-slate-800 tracking-tight flex items-center gap-2">
+                <MapPin className="text-emerald-500" />
+                Nearby Hubs
+              </h2>
+              <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-widest">Live Updates</span>
+            </div>
+
+            <div className="rounded-[2.5rem] overflow-hidden h-[500px] border border-slate-100 shadow-inner">
               <MapContainer
                 center={userLocation || [20.5937, 78.9629]}
-                zoom={10}
-                style={{ height: '400px', width: '100%' }}
+                zoom={11}
+                style={{ height: '100%', width: '100%' }}
               >
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                />
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 {filteredBuyers.map(buyer => (
                   <Marker key={buyer.id} position={[buyer.location.lat, buyer.location.lng]}>
-                    <Popup>
-                      <div className="map-popup">
-                        <h3>{buyer.name}</h3>
-                        <p>{buyer.type}</p>
-                        <p>Distance: {buyer.distance}km</p>
-                        <p>Rating: {buyer.rating}/5</p>
+                    <Popup className="premium-popup">
+                      <div className="p-3 font-sans space-y-2">
+                        <p className="font-black text-slate-800 text-sm">{buyer.name}</p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase">{buyer.type}</p>
+                        <button className="w-full mt-2 bg-emerald-600 text-white py-2 rounded-xl text-[10px] font-black uppercase tracking-widest">Connect</button>
                       </div>
                     </Popup>
                   </Marker>
                 ))}
               </MapContainer>
             </div>
-          </div>
 
-          {/* Buyers List */}
-          <div className="buyers-list-section">
-            <h2 className="section-title">
-              <Building className="section-icon" />
-              Available Buyers ({filteredBuyers.length})
-            </h2>
-            
-            {filteredBuyers.length === 0 ? (
-              <div className="no-results">
-                <Users className="no-results-icon" />
-                <h3>No buyers found</h3>
-                <p>Try adjusting your search or filters</p>
+            <div className="bg-slate-50 p-6 rounded-3xl space-y-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
+                  <Sparkles size={14} className="text-white" />
+                </div>
+                <p className="text-[11px] font-black text-slate-700 uppercase tracking-widest">Pro Insight</p>
               </div>
-            ) : (
-              <div className="buyers-grid">
-                {filteredBuyers.map(buyer => (
-                  <div key={buyer.id} className="buyer-card card">
-                    <div className="buyer-image">
-                      <img src={buyer.image} alt={buyer.name} />
-                      <div className="buyer-category">{buyer.category}</div>
-                      <div className="buyer-rating">
-                        {renderStars(buyer.rating)}
-                        <span className="rating-text">{buyer.rating}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="buyer-content">
-                      <h3 className="buyer-name">{buyer.name}</h3>
-                      <p className="buyer-type">{buyer.type}</p>
-                      <p className="buyer-description">{buyer.description}</p>
-                      
-                      <div className="buyer-details">
-                        <div className="detail-item">
-                          <MapPin className="detail-icon" />
-                          <span>{buyer.distance}km away</span>
-                        </div>
-                        <div className="detail-item">
-                          <Phone className="detail-icon" />
-                          <span>{buyer.phone}</span>
-                        </div>
-                        <div className="detail-item">
-                          <Mail className="detail-icon" />
-                          <span>{buyer.email}</span>
-                        </div>
-                      </div>
-                      
-                      <div className="buyer-crops">
-                        <h4>Interested in:</h4>
-                        <div className="crop-tags">
-                          {buyer.crops.map((crop, index) => (
-                            <span key={index} className="crop-tag">{crop}</span>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="buyer-actions">
-                        <button className="btn btn-secondary">
-                          <Phone className="btn-icon" />
-                          Call Now
-                        </button>
-                        <button className="btn btn-primary">
-                          <Mail className="btn-icon" />
-                          Send Inquiry
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+              <p className="text-xs font-medium text-slate-500 leading-relaxed italic">
+                Demand for organic pulses is currently surging in your sector. Reach out to Organic Foods Ltd for priority bids.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -327,4 +247,4 @@ const BuyersPage = ({ userLocation }) => {
   );
 };
 
-export default BuyersPage; 
+export default BuyersPage;

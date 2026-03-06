@@ -1,7 +1,7 @@
 const config = {
     // Replace this with your App Runner Default Domain after creating the service
     // Example: 'https://xxxx.us-east-1.awsapprunner.com'
-    API_BASE_URL: window.location.hostname === 'localhost' ? 'http://127.0.0.1:8000' : 'http://d3w4s9i5smro7f.cloudfront.net',
+    API_BASE_URL: window.location.hostname === 'localhost' ? 'https://d3w4s9i5smro7f.cloudfront.net' : 'https://d3w4s9i5smro7f.cloudfront.net',
 };
 
 export default config;

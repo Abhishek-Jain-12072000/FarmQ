@@ -1,91 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
 
 :root {
-  /* Modern Emerald Palette */
-  --primary-green: #10b981;
-  --primary-dark: #065f46;
-  --primary-light: #34d399;
-  --secondary: #f59e0b;
-  --accent: #f97316;
-
-  /* Neutral Palette */
-  --white: #ffffff;
-  --off-white: #fcfdfc;
-  --light-gray: #f3f4f6;
-  --gray: #9ca3af;
-  --dark-gray: #4b5563;
-  --black: #111827;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-premium: 0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
-
-  /* Border Radius */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-full: 9999px;
-
-  /* Glass and Gradients */
-  --glass: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --grad-primary: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  --grad-mesh: radial-gradient(at 0% 0%, hsla(161, 84%, 84%, 0.3) 0, transparent 50%),
-    radial-gradient(at 50% 0%, hsla(142, 69%, 58%, 0.1) 0, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(38, 92%, 50%, 0.1) 0, transparent 50%);
-
-  /* Transitions */
-  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  --primary: #10b981;
 }
 
 body {
+  margin: 0;
   font-family: 'Outfit', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--off-white);
-  color: var(--black);
-  line-height: 1.6;
-  overflow-x: hidden;
+  background-color: #f8fafc;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--light-gray);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary-green);
-  border-radius: var(--radius-full);
-  border: 3px solid var(--light-gray);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-dark);
-}
-
-/* Page Transition */
-.page-transition {
-  animation: fadeIn 0.6s var(--ease-soft);
-}
-
+/* Base animations that work even without Tailwind */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -98,113 +23,6 @@ code {
   }
 }
 
-/* Utility classes */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.btn {
-  padding: 0.875rem 1.75rem;
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  font-weight: 600;
-  font-family: 'Outfit', sans-serif;
-  transition: all 0.3s var(--ease-soft);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.btn-primary {
-  background: var(--grad-primary);
-  color: var(--white);
-  box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.3);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 15px 25px -5px rgba(16, 185, 129, 0.4);
-}
-
-.btn-secondary {
-  background-color: var(--white);
-  color: var(--primary-dark);
-  border: 1px solid var(--light-gray);
-}
-
-.btn-secondary:hover {
-  background-color: var(--light-gray);
-  transform: translateY(-2px);
-}
-
-.card {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: var(--shadow-premium);
-  padding: 2rem;
-  transition: all 0.4s var(--ease-soft);
-}
-
-.card:hover {
-  transform: translateY(-8px);
-  border-color: var(--primary-light);
-}
-
-.text-center {
-  text-align: center;
-}
-
-/* Spacing Utilities */
-.mb-1 {
-  margin-bottom: 0.5rem;
-}
-
-.mb-2 {
-  margin-bottom: 1rem;
-}
-
-.mb-3 {
-  margin-bottom: 1.5rem;
-}
-
-.mb-4 {
-  margin-bottom: 2rem;
-}
-
-.mt-1 {
-  margin-top: 0.5rem;
-}
-
-.mt-2 {
-  margin-top: 1rem;
-}
-
-.mt-3 {
-  margin-top: 1.5rem;
-}
-
-.mt-4 {
-  margin-top: 2rem;
-}
-
-.p-1 {
-  padding: 0.5rem;
-}
-
-.p-2 {
-  padding: 1rem;
-}
-
-.p-3 {
-  padding: 1.5rem;
-}
-
-.p-4 {
-  padding: 2rem;
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
 }

@@ -367,7 +367,7 @@ function ChatPage() {
     <div className="chat-page-root">
       <div className="chat-card">
         <header className="chat-header">
-          <h1><span>🌱</span> FarmQ AI Assistant</h1>
+          <h1><span>🌱</span> FarmQ</h1>
           <div className="header-actions">
             <select
               value={language}

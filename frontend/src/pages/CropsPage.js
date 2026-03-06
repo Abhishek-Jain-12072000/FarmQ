@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Leaf, MapPin, Filter, Search, Package, Clock, User } from 'lucide-react';
-import { formatPrice, getLocationBasedPrices } from '../utils/currencyUtils';
-import './CropsPage.css';
+import { Leaf, MapPin, Search, Package, MessageSquare, ChevronRight, Sparkles, Filter } from 'lucide-react';
+import { formatPrice } from '../utils/currencyUtils';
 
 const CropsPage = ({ userLocation }) => {
   const [crops, setCrops] = useState([]);
@@ -12,7 +11,6 @@ const CropsPage = ({ userLocation }) => {
   const [loading, setLoading] = useState(true);
   const [countryCode, setCountryCode] = useState('IN');
 
-  // Base crop data with prices in INR
   const baseCrops = [
     {
       id: 1,
@@ -24,13 +22,12 @@ const CropsPage = ({ userLocation }) => {
       distance: 2.5,
       location: { lat: 20.5937, lng: 78.9629 },
       farmer: 'Rajesh Kumar',
-      harvestDate: '2024-03-15',
-      image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400',
-      description: 'High-quality organic wheat, perfect for bread making'
+      image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=800',
+      description: 'High-quality organic wheat, perfect for premium bread and local logistics.'
     },
     {
       id: 2,
-      name: 'Fresh Tomatoes',
+      name: 'Tomatoes',
       category: 'vegetables',
       price: 25,
       quantity: 200,
@@ -38,9 +35,8 @@ const CropsPage = ({ userLocation }) => {
       distance: 5.2,
       location: { lat: 20.5937 + 0.01, lng: 78.9629 + 0.01 },
       farmer: 'Priya Sharma',
-      harvestDate: '2024-03-10',
-      image: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=400',
-      description: 'Ripe, red tomatoes grown without pesticides'
+      image: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=800',
+      description: 'Ripe, field-grown tomatoes with zero pesticide residues.'
     },
     {
       id: 3,
@@ -52,269 +48,223 @@ const CropsPage = ({ userLocation }) => {
       distance: 8.7,
       location: { lat: 20.5937 - 0.01, lng: 78.9629 - 0.01 },
       farmer: 'Amit Patel',
-      harvestDate: '2024-03-12',
-      image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400',
-      description: 'Premium basmati rice with long grains'
-    },
-    {
-      id: 4,
-      name: 'Sweet Corn',
-      category: 'vegetables',
-      price: 30,
-      quantity: 150,
-      unit: 'kg',
-      distance: 3.1,
-      location: { lat: 20.5937 + 0.02, lng: 78.9629 - 0.02 },
-      farmer: 'Sita Devi',
-      harvestDate: '2024-03-08',
-      image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400',
-      description: 'Fresh sweet corn, perfect for cooking'
-    },
-    {
-      id: 5,
-      name: 'Potatoes',
-      category: 'vegetables',
-      price: 20,
-      quantity: 400,
-      unit: 'kg',
-      distance: 6.8,
-      location: { lat: 20.5937 - 0.02, lng: 78.9629 + 0.02 },
-      farmer: 'Mohan Singh',
-      harvestDate: '2024-03-05',
-      image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400',
-      description: 'Fresh potatoes, great for various dishes'
-    },
-    {
-      id: 6,
-      name: 'Lentils',
-      category: 'pulses',
-      price: 80,
-      quantity: 100,
-      unit: 'kg',
-      distance: 4.3,
-      location: { lat: 20.5937 + 0.03, lng: 78.9629 + 0.03 },
-      farmer: 'Kavita Verma',
-      harvestDate: '2024-03-14',
-      image: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=400',
-      description: 'Organic lentils, rich in protein'
+      image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800',
+      description: 'Extra-long grain premium basmati harvested with sustainability in mind.'
     }
   ];
 
-  // Detect user location on component mount
   useEffect(() => {
     const detectLocation = async () => {
       try {
-        // Try to get location from props first
         if (userLocation && userLocation.country) {
           setCountryCode(userLocation.country);
           return;
         }
-
-        // Fallback: Use browser geolocation or IP-based detection
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
-
-        if (data.country_code) {
-          setCountryCode(data.country_code);
-        }
+        if (data.country_code) setCountryCode(data.country_code);
       } catch (error) {
-        console.log('Could not detect location, using default (India)');
         setCountryCode('IN');
       }
     };
-
     detectLocation();
   }, [userLocation]);
 
   useEffect(() => {
-    // Convert prices based on location
     const locationBasedCrops = baseCrops.map(crop => ({
       ...crop,
-      price: Math.round(crop.price * (countryCode === 'IN' ? 1 :
-        countryCode === 'NG' ? 8.33 :
-          countryCode === 'GH' ? 71.43 :
-            countryCode === 'SG' ? 62.5 : 1))
+      price: Math.round(crop.price * (countryCode === 'IN' ? 1 : 1.2)) // Simplified for demo
     }));
 
-    // Simulate API call
     setTimeout(() => {
       setCrops(locationBasedCrops);
       setFilteredCrops(locationBasedCrops);
       setLoading(false);
-    }, 1000);
+    }, 600);
   }, [countryCode]);
 
   useEffect(() => {
-    filterCrops();
-  }, [searchTerm, selectedCategory, crops]);
-
-  const filterCrops = () => {
     let filtered = crops;
-
     if (searchTerm) {
       filtered = filtered.filter(crop =>
         crop.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         crop.farmer.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(crop => crop.category === selectedCategory);
     }
-
     setFilteredCrops(filtered);
-  };
+  }, [searchTerm, selectedCategory, crops]);
 
   const categories = [
-    { value: 'all', label: 'All Categories' },
+    { value: 'all', label: 'All Produce' },
     { value: 'grains', label: 'Grains' },
     { value: 'vegetables', label: 'Vegetables' },
-    { value: 'fruits', label: 'Fruits' },
     { value: 'pulses', label: 'Pulses' }
   ];
 
   if (loading) {
     return (
-      <div className="crops-page page-transition">
-        <div className="container">
-          <div className="loading-container">
-            <div className="loading-spinner"></div>
-            <p>Loading crops in your area...</p>
-          </div>
-        </div>
+      <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-4">
+        <div className="w-10 h-10 border-4 border-emerald-100 border-t-emerald-600 rounded-full animate-spin"></div>
+        <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">Scanning Global Exchange...</p>
       </div>
     );
   }
 
   return (
-    <div className="crops-page page-transition">
-      <div className="container">
-        <div className="page-header">
-          <h1 className="page-title">
-            <Leaf className="page-icon" />
-            Available Crops
-          </h1>
-          <p className="page-subtitle">Discover fresh produce from local farmers in your area</p>
+    <div className="space-y-12 animate-fade-in pb-20">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2 text-emerald-600">
+            <Leaf className="w-5 h-5" />
+            <span className="font-black uppercase tracking-[0.2em] text-[10px]">Supply Chain</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl font-black text-slate-800 tracking-tighter">Harvest Market</h1>
+          <p className="text-slate-500 font-medium max-w-xl">Browse top-quality produce directly from digital farms and coordinate direct procurement.</p>
         </div>
 
-        {/* Filters */}
-        <div className="filters-section">
-          <div className="search-box">
-            <Search className="search-icon" />
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="relative group">
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
             <input
               type="text"
-              placeholder="Search crops or farmers..."
+              placeholder="Search by variety or farmer..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
+              className="pl-12 pr-6 py-4 bg-white border border-slate-100 rounded-[1.5rem] w-full sm:w-80 shadow-premium focus:outline-none focus:ring-4 ring-emerald-500/5 transition-all text-sm font-bold text-slate-700 placeholder:text-slate-300"
             />
           </div>
-
-          <div className="category-filter">
-            <Filter className="filter-icon" />
+          <div className="relative">
+            <Filter className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white z-10 pointer-events-none" />
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="category-select"
+              className="pl-12 pr-8 py-4 bg-slate-900 text-white rounded-[1.5rem] focus:outline-none font-black text-xs uppercase tracking-widest cursor-pointer shadow-xl appearance-none"
             >
-              {categories.map(category => (
-                <option key={category.value} value={category.value}>
-                  {category.label}
-                </option>
-              ))}
+              {categories.map(c => <option key={c.value} value={c.value} className="bg-white text-slate-800">{c.label}</option>)}
             </select>
           </div>
         </div>
+      </div>
 
-        <div className="crops-content">
-          {/* Map Section */}
-          <div className="map-section">
-            <h2 className="section-title">
-              <MapPin className="section-icon" />
-              Crop Locations
-            </h2>
-            <div className="map-container">
-              <MapContainer
-                center={[20.5937, 78.9629]}
-                zoom={10}
-                style={{ height: '400px', width: '100%' }}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        {/* Marketplace Grid */}
+        <div className="lg:col-span-8 space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {filteredCrops.map((crop) => (
+              <div key={crop.id} className="bg-white rounded-[3rem] overflow-hidden border border-slate-100 hover:shadow-premium transition-all duration-500 group relative">
+                <div className="relative h-64 overflow-hidden">
+                  <img src={crop.image} alt={crop.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                  <div className="absolute top-6 left-6 flex items-center bg-white/90 backdrop-blur px-4 py-2 rounded-2xl border border-white/50 text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">
+                    <Sparkles size={12} className="text-emerald-500 mr-2" />
+                    {crop.category}
+                  </div>
+                </div>
+
+                <div className="p-8 space-y-6">
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-1">
+                      <h3 className="text-2xl font-black text-slate-800 tracking-tight">{crop.name}</h3>
+                      <div className="flex items-center text-slate-400 text-xs font-bold font-sans">
+                        <MapPin size={14} className="mr-1.5 text-orange-500" />
+                        <span>{crop.distance} KM • {crop.farmer}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-sm font-medium text-slate-500 leading-relaxed italic">"{crop.description}"</p>
+
+                  <div className="flex items-center justify-between pt-6 border-t border-slate-50">
+                    <div className="space-y-0.5">
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Price per {crop.unit}</p>
+                      <p className="text-3xl font-black text-emerald-600">{formatPrice(crop.price, countryCode)}</p>
+                    </div>
+                    <div className="flex space-x-2">
+                      <button className="p-3.5 bg-slate-50 text-slate-600 rounded-2xl hover:bg-emerald-600 hover:text-white transition-all active:scale-95 shadow-sm border border-slate-100">
+                        <MessageSquare size={18} />
+                      </button>
+                      <button className="bg-slate-900 text-white px-8 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-600 shadow-xl transition-all flex items-center group active:scale-95">
+                        <span>Buy</span>
+                        <ChevronRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {filteredCrops.length === 0 && (
+            <div className="bg-slate-50/50 rounded-[3rem] p-24 text-center space-y-6 border-4 border-dashed border-slate-100 animate-pulse">
+              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm">
+                <Search className="text-slate-200" size={32} />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-2xl font-black text-slate-800">Supply Interrupted</h3>
+                <p className="text-slate-400 font-bold text-sm">No produce found matching your current filters.</p>
+              </div>
+              <button
+                onClick={() => { setSearchTerm(''); setSelectedCategory('all'); }}
+                className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-xs uppercase tracking-widest"
               >
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                />
+                Reset Parameters
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Tactical Intel Portal */}
+        <div className="lg:col-span-4 space-y-10 sticky top-10">
+          <div className="bg-white rounded-[3rem] p-8 border border-slate-100 shadow-premium space-y-8 overflow-hidden relative group">
+            <div className="absolute top-0 right-0 p-10 opacity-5 -mr-10 -mt-10">
+              <MapPin size={120} />
+            </div>
+
+            <div className="flex items-center justify-between relative z-10">
+              <h2 className="text-lg font-black text-slate-800 tracking-tight flex items-center gap-2">
+                <MapPin className="text-emerald-500" />
+                Harvest Nodes
+              </h2>
+              <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-widest">Active Radius</span>
+            </div>
+
+            <div className="rounded-[2.5rem] overflow-hidden h-[450px] border border-slate-100 shadow-inner relative z-10">
+              <MapContainer
+                center={userLocation || [20.5937, 78.9629]}
+                zoom={12}
+                style={{ height: '100%', width: '100%' }}
+              >
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 {filteredCrops.map((crop) => (
                   <Marker key={crop.id} position={[crop.location.lat, crop.location.lng]}>
                     <Popup>
-                      <div className="map-popup">
-                        <h3>{crop.name}</h3>
-                        <p>Price: {formatPrice(crop.price, countryCode)}/{crop.unit}</p>
-                        <p>Farmer: {crop.farmer}</p>
-                        <p>Distance: {crop.distance} km</p>
+                      <div className="p-3 font-sans space-y-2">
+                        <p className="font-black text-slate-800 text-sm italic">"{crop.name}"</p>
+                        <div className="h-px bg-slate-100"></div>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Available at hub</p>
+                        <p className="font-black text-emerald-600 text-base">{formatPrice(crop.price, countryCode)}/kg</p>
                       </div>
                     </Popup>
                   </Marker>
                 ))}
               </MapContainer>
             </div>
-          </div>
 
-          {/* Crops List */}
-          <div className="crops-list">
-            <h2 className="section-title">
-              <Package className="section-icon" />
-              Available Crops ({filteredCrops.length})
-            </h2>
-
-            <div className="crops-grid">
-              {filteredCrops.map((crop) => (
-                <div key={crop.id} className="crop-card card">
-                  <div className="crop-image">
-                    <img src={crop.image} alt={crop.name} />
-                    <div className="crop-category">{crop.category}</div>
-                  </div>
-
-                  <div className="crop-details">
-                    <h3 className="crop-name">{crop.name}</h3>
-                    <p className="crop-description">{crop.description}</p>
-
-                    <div className="crop-info">
-                      <div className="info-item">
-                        <Package className="info-icon" />
-                        <span>{crop.quantity} {crop.unit} available</span>
-                      </div>
-                      <div className="info-item">
-                        <MapPin className="info-icon" />
-                        <span>{crop.distance} km away</span>
-                      </div>
-                    </div>
-                    {/* <div className="crop-info">
-                      <div className="info-item">
-                        <User className="info-icon" />
-                        <span>{crop.farmer}</span>
-                      </div>
-                      <div className="info-item">
-                        <Clock className="info-icon" />
-                        <span>Harvested: {new Date(crop.harvestDate).toLocaleDateString()}</span>
-                      </div>
-                    </div> */}
-
-                    <div className="crop-price">
-                      <span className="price-amount">{formatPrice(crop.price, countryCode)}/{crop.unit}</span>
-                      <button className="contact-btn">Contact Farmer</button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {filteredCrops.length === 0 && (
-              <div className="no-results">
-                <Leaf className="no-results-icon" />
-                <h3>No crops found</h3>
-                <p>Try adjusting your search or filters</p>
+            <div className="bg-slate-900 p-6 rounded-[2rem] flex items-center space-x-5 relative z-10 overflow-hidden shadow-2xl">
+              <div className="absolute inset-0 bg-emerald-600 opacity-10 blur-2xl animate-pulse"></div>
+              <div className="w-12 h-12 bg-white/10 backdrop-blur rounded-2xl flex items-center justify-center shrink-0 relative z-10">
+                <Package className="text-emerald-400 w-6 h-6" />
               </div>
-            )}
+              <div className="relative z-10">
+                <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-1">Stock Intel</p>
+                <p className="text-xs font-bold text-slate-200 leading-snug">
+                  Over {filteredCrops.length} verified supply nodes ready for immediate off-take within your zone.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -322,4 +272,4 @@ const CropsPage = ({ userLocation }) => {
   );
 };
 
-export default CropsPage; 
+export default CropsPage;
