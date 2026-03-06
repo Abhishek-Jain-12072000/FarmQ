@@ -38,7 +38,7 @@ load_dotenv(override=True)
 
 conversations = {}
 
-WEATHER_API = "YOUR_OPENWEATHER_MAP_API"
+WEATHER_API = os.getenv("OPENWEATHER_API_KEY", "")
 AWS_REGION = os.getenv("AWS_REGION", "us-east-1")
 BEDROCK_MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "anthropic.claude-3-haiku-20240307-v1:0")
 
