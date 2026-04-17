@@ -301,7 +301,8 @@ async def bedrock_chat(request: Request):
 async def upload_image(file: UploadFile = File(...)):
     if not file:
         raise HTTPException(status_code=400, detail="No file provided")
-    folder = "uploads"
+    folder = "/tmp/uploads"
+    os.makedirs(folder, exist_ok=True)
     path = os.path.join(folder, f"{uuid.uuid4()}_{file.filename}")
     with open(path, "wb") as f:
         f.write(await file.read())

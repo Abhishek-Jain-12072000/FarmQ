@@ -16,3 +16,7 @@ langchain-community
 langchain_aws
 python-dotenv
 websockets
+
+# PyTorch CPU-only (keeps bundle size smaller for serverless)
+torch
+torchvision
